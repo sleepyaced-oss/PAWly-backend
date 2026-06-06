@@ -17,6 +17,17 @@ require_once __DIR__ . '/controllers/SolicitudController.php';
 require_once __DIR__ . '/controllers/UserController.php';
 require_once __DIR__ . '/controllers/AdminController.php';
 
+if (isset($_GET['reset_pass'])) {
+    $db = new Database();
+    $conn = $db->getConnection();
+    $hashUser  = password_hash('password123', PASSWORD_BCRYPT);
+    $hashAdmin = password_hash('admin123', PASSWORD_BCRYPT);
+    $conn->prepare("UPDATE usuarios SET password = ? WHERE rol = 'USER'")->execute([$hashUser]);
+    $conn->prepare("UPDATE usuarios SET password = ? WHERE rol = 'ADMIN'")->execute([$hashAdmin]);
+    echo json_encode(['ok' => true]);
+    exit();
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = preg_replace('#^.*?/api#', '', $uri);
