@@ -70,6 +70,10 @@ class AuthController {
             return;
         }
 
+        error_log("HASH: [" . $usuario['password'] . "]");
+        error_log("PASS: [" . $datos['password'] . "]");
+        error_log("VERIFY: " . (password_verify($datos['password'], $usuario['password']) ? 'TRUE' : 'FALSE'));
+
         if (!password_verify($datos['password'], $usuario['password'])) {
             http_response_code(401);
             echo json_encode(['error' => 'Email o contrasena incorrectos.']);
