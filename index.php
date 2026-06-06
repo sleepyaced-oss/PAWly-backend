@@ -20,6 +20,7 @@ require_once __DIR__ . '/controllers/AdminController.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = preg_replace('#^.*?/api#', '', $uri);
+error_log("METHOD: " . $method . " URI: [" . $uri . "]");
 $uri = rtrim($uri, '/');
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
